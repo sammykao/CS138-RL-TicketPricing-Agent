@@ -1,0 +1,160 @@
+zone,section,quality_score,rationale
+Balcony,BAL301,0.48,Center 300-level balcony section 301; high but straight-on view considered best of balcony ring.
+Balcony,BAL302,0.48,Center 300-level balcony section 302; high but straight-on view considered best of balcony ring.
+Balcony,BAL303,0.48,Center 300-level balcony section 303; high but straight-on view considered best of balcony ring.
+Balcony,BAL304,0.36,Corner 300-level balcony section 304; very high with angled view relative to center court or rink.
+Balcony,BAL305,0.36,Corner 300-level balcony section 305; very high with angled view relative to center court or rink.
+Balcony,BAL306,0.28,"End 300-level balcony section 306; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL307,0.28,"End 300-level balcony section 307; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL308,0.28,"End 300-level balcony section 308; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL309,0.28,"End 300-level balcony section 309; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL310,0.28,"End 300-level balcony section 310; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL311,0.28,"End 300-level balcony section 311; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL312,0.28,"End 300-level balcony section 312; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL313,0.36,Corner 300-level balcony section 313; very high with angled view relative to center court or rink.
+Balcony,BAL314,0.36,Corner 300-level balcony section 314; very high with angled view relative to center court or rink.
+Balcony,BAL315,0.48,Center 300-level balcony section 315; high but straight-on view considered best of balcony ring.
+Balcony,BAL316,0.48,Center 300-level balcony section 316; high but straight-on view considered best of balcony ring.
+Balcony,BAL317,0.48,Center 300-level balcony section 317; high but straight-on view considered best of balcony ring.
+Balcony,BAL318,0.28,"End 300-level balcony section 318; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL319,0.28,"End 300-level balcony section 319; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL320,0.36,Corner 300-level balcony section 320; very high with angled view relative to center court or rink.
+Balcony,BAL321,0.28,"End 300-level balcony section 321; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL322,0.28,"End 300-level balcony section 322; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL323,0.28,"End 300-level balcony section 323; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL324,0.28,"End 300-level balcony section 324; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL325,0.28,"End 300-level balcony section 325; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL326,0.28,"End 300-level balcony section 326; very high and behind basket or goal, furthest standard bowl view."
+Balcony,BAL327,0.36,Corner 300-level balcony section 327; very high with angled view relative to center court or rink.
+Balcony,BAL328,0.36,Corner 300-level balcony section 328; very high with angled view relative to center court or rink.
+Balcony,BAL329,0.36,Corner 300-level balcony section 329; very high with angled view relative to center court or rink.
+Balcony,BAL330,0.48,Center 300-level balcony section 330; high but straight-on view considered best of balcony ring.
+Balcony,Balcony,0.38,Generic balcony label; represents typical 300-level upper-bowl seat with good atmosphere but distant view.
+Balcony Baseline,308,0.28,"End 300-level balcony section 308; very high and behind basket or goal, furthest standard bowl view."
+Balcony Baseline,310,0.28,"End 300-level balcony section 310; very high and behind basket or goal, furthest standard bowl view."
+Balcony Baseline,324,0.28,"End 300-level balcony section 324; very high and behind basket or goal, furthest standard bowl view."
+Balcony Center,301,0.48,Center 300-level balcony section 301; high and far from floor but with straight-on view of court or rink.
+Balcony Center,302,0.48,Center 300-level balcony section 302; high and far from floor but with straight-on view of court or rink.
+Balcony Center,315,0.48,Center 300-level balcony section 315; high and far from floor but with straight-on view of court or rink.
+Balcony Center,316,0.48,Center 300-level balcony section 316; high and far from floor but with straight-on view of court or rink.
+Balcony Center,317,0.48,Center 300-level balcony section 317; high and far from floor but with straight-on view of court or rink.
+Balcony Center,330,0.48,Center 300-level balcony section 330; high and far from floor but with straight-on view of court or rink.
+Balcony Corner,306,0.36,Corner 300-level balcony section 306; very high with angled view relative to center court or rink.
+Balcony Corner,312,0.36,Corner 300-level balcony section 312; very high with angled view relative to center court or rink.
+Balcony Corner,321,0.36,Corner 300-level balcony section 321; very high with angled view relative to center court or rink.
+Balcony Corner,326,0.36,Corner 300-level balcony section 326; very high with angled view relative to center court or rink.
+Boardroom,Boardroom,0.83,Boardroom premium lounge seating with comfortable chairs and upscale end-zone view plus hospitality access.
+Club,CLB107,0.82,Lower-bowl club seating with plush chairs in CLB107; in-seat service and lounge access near the action.
+Club,CLB109,0.82,Lower-bowl club seating with plush chairs in CLB109; in-seat service and lounge access near the action.
+Club,CLB111,0.82,Lower-bowl club seating with plush chairs in CLB111; in-seat service and lounge access near the action.
+Club,CLB113,0.82,Lower-bowl club seating with plush chairs in CLB113; in-seat service and lounge access near the action.
+Club,CLB115,0.82,Lower-bowl club seating with plush chairs in CLB115; in-seat service and lounge access near the action.
+Club,CLB137,0.82,Lower-bowl club seating with plush chairs in CLB137; in-seat service and lounge access near the action.
+Club,CLB139,0.82,Lower-bowl club seating with plush chairs in CLB139; in-seat service and lounge access near the action.
+Club,CLB141,0.82,Lower-bowl club seating with plush chairs in CLB141; in-seat service and lounge access near the action.
+Club,CLB143,0.82,Lower-bowl club seating with plush chairs in CLB143; in-seat service and lounge access near the action.
+Club,CLB145,0.82,Lower-bowl club seating with plush chairs in CLB145; in-seat service and lounge access near the action.
+Club,Club,0.82,Generic club-seat designation; lower-bowl premium seating with plush chairs and access to exclusive lounges.
+Club Center,109,0.84,Center club seating in section 109; excellent lower-bowl sideline view plus full club amenities.
+Club Center,111,0.84,Center club seating in section 111; excellent lower-bowl sideline view plus full club amenities.
+Club Center,113,0.84,Center club seating in section 113; excellent lower-bowl sideline view plus full club amenities.
+Club Center,139,0.84,Center club seating in section 139; excellent lower-bowl sideline view plus full club amenities.
+Club Center,141,0.84,Center club seating in section 141; excellent lower-bowl sideline view plus full club amenities.
+Club Center,143,0.84,Center club seating in section 143; excellent lower-bowl sideline view plus full club amenities.
+Club Corner,107,0.80,Corner club seating in section 107; strong proximity and amenities with a more angled sideline view.
+Club Corner,115,0.80,Corner club seating in section 115; strong proximity and amenities with a more angled sideline view.
+Club Corner,137,0.80,Corner club seating in section 137; strong proximity and amenities with a more angled sideline view.
+Deck,Deck,0.78,Deck social area blending sports-bar atmosphere with reserved seating and an elevated end or corner view.
+Floor,FLR11,0.89,Floor-level reserved seat in FLR11; extremely close to play with immersive experience but limited elevation.
+Floor,FLR13,0.89,Floor-level reserved seat in FLR13; extremely close to play with immersive experience but limited elevation.
+Floor,FLR17,0.89,Floor-level reserved seat in FLR17; extremely close to play with immersive experience but limited elevation.
+Floor,FLR18,0.89,Floor-level reserved seat in FLR18; extremely close to play with immersive experience but limited elevation.
+Floor,FLR2,0.89,Floor-level reserved seat in FLR2; extremely close to play with immersive experience but limited elevation.
+Floor,FLR21,0.89,Floor-level reserved seat in FLR21; extremely close to play with immersive experience but limited elevation.
+Floor,FLR6,0.89,Floor-level reserved seat in FLR6; extremely close to play with immersive experience but limited elevation.
+Floor,FLR7,0.89,Floor-level reserved seat in FLR7; extremely close to play with immersive experience but limited elevation.
+Garden View,Garden View,0.82,Garden View hospitality space providing upscale amenities and a good elevated perspective of the floor.
+Lofts,LOFT01,0.81,Lofts semi-private premium box LOFT01 with curated dining and panoramic upper-level view above the main bowl.
+Lofts,LOFT05,0.81,Lofts semi-private premium box LOFT05 with curated dining and panoramic upper-level view above the main bowl.
+Lofts,LOFT06,0.81,Lofts semi-private premium box LOFT06 with curated dining and panoramic upper-level view above the main bowl.
+Lofts,LOFT08,0.81,Lofts semi-private premium box LOFT08 with curated dining and panoramic upper-level view above the main bowl.
+Lofts,LOFT09,0.81,Lofts semi-private premium box LOFT09 with curated dining and panoramic upper-level view above the main bowl.
+Loge,20,0.70,Standard loge-level seating in section 20 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE1,0.70,Standard loge-level seating in section LOGE1 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE10,0.70,Standard loge-level seating in section LOGE10 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE11,0.70,Standard loge-level seating in section LOGE11 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE12,0.70,Standard loge-level seating in section LOGE12 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE13,0.70,Standard loge-level seating in section LOGE13 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE14,0.70,Standard loge-level seating in section LOGE14 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE15,0.70,Standard loge-level seating in section LOGE15 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE16,0.70,Standard loge-level seating in section LOGE16 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE17,0.70,Standard loge-level seating in section LOGE17 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE18,0.70,Standard loge-level seating in section LOGE18 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE19,0.70,Standard loge-level seating in section LOGE19 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE2,0.70,Standard loge-level seating in section LOGE2 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE20,0.70,Standard loge-level seating in section LOGE20 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE21,0.70,Standard loge-level seating in section LOGE21 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE3,0.70,Standard loge-level seating in section LOGE3 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE4,0.70,Standard loge-level seating in section LOGE4 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE5,0.70,Standard loge-level seating in section LOGE5 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE6,0.70,Standard loge-level seating in section LOGE6 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE7,0.70,Standard loge-level seating in section LOGE7 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE8,0.70,Standard loge-level seating in section LOGE8 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,LOGE9,0.70,Standard loge-level seating in section LOGE9 with good lower-bowl proximity and sightlines without club-level perks.
+Loge,Loge,0.70,Generic loge designation; typical lower-bowl distance and angle with solid sightlines but no added club perks.
+Loge Baseline,17,0.61,Lower-bowl baseline section 17; close to action behind basket or goal but some plays partially blocked.
+Loge Baseline,18,0.61,Lower-bowl baseline section 18; close to action behind basket or goal but some plays partially blocked.
+Loge Baseline,6,0.61,Lower-bowl baseline section 6; close to action behind basket or goal but some plays partially blocked.
+Loge Baseline,7,0.61,Lower-bowl baseline section 7; close to action behind basket or goal but some plays partially blocked.
+Loge Center,1,0.74,Center loge section 1 in lower bowl; very strong sideline sightline at comfortable distance from play.
+Loge Center,11,0.74,Center loge section 11 in lower bowl; very strong sideline sightline at comfortable distance from play.
+Loge Center,12,0.74,Center loge section 12 in lower bowl; very strong sideline sightline at comfortable distance from play.
+Loge Center,13,0.74,Center loge section 13 in lower bowl; very strong sideline sightline at comfortable distance from play.
+Loge Center,2,0.74,Center loge section 2 in lower bowl; very strong sideline sightline at comfortable distance from play.
+Loge Corner,10,0.68,Corner loge section 10 in lower bowl; close to floor with more angled view than center loge.
+Loge Corner,15,0.68,Corner loge section 15 in lower bowl; close to floor with more angled view than center loge.
+Loge Corner,16,0.68,Corner loge section 16 in lower bowl; close to floor with more angled view than center loge.
+Loge Corner,19,0.68,Corner loge section 19 in lower bowl; close to floor with more angled view than center loge.
+Loge Corner,3,0.68,Corner loge section 3 in lower bowl; close to floor with more angled view than center loge.
+Loge Corner,4,0.68,Corner loge section 4 in lower bowl; close to floor with more angled view than center loge.
+Loge Corner,5,0.68,Corner loge section 5 in lower bowl; close to floor with more angled view than center loge.
+Loge Corner,8,0.68,Corner loge section 8 in lower bowl; close to floor with more angled view than center loge.
+Loge Corner,9,0.68,Corner loge section 9 in lower bowl; close to floor with more angled view than center loge.
+North Lounge,North Lounge,0.80,North Lounge premium social space with bar and lounge seating plus an elevated view of the playing surface.
+Rafters,RAF10,0.08,Rafters level seat RAF10 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF11,0.08,Rafters level seat RAF11 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF12,0.08,Rafters level seat RAF12 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF13,0.08,Rafters level seat RAF13 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF14,0.08,Rafters level seat RAF14 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF15,0.08,Rafters level seat RAF15 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF31,0.08,Rafters level seat RAF31 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF32,0.08,Rafters level seat RAF32 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF35,0.08,Rafters level seat RAF35 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF36,0.08,Rafters level seat RAF36 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF37,0.08,Rafters level seat RAF37 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF38,0.08,Rafters level seat RAF38 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF7,0.08,Rafters level seat RAF7 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,RAF8,0.08,Rafters level seat RAF8 on level 9 among banners; highest and farthest seating prioritizing social vibe over closeness.
+Rafters,Rafters,0.08,Generic Rafters designation; top-level party deck prioritizing atmosphere at the expense of proximity to the floor.
+South Lounge,South Lounge,0.80,South Lounge premium social space with bar and lounge seating plus an elevated view of the playing surface.
+SportsDeck,Sports Deck,0.79,Ford SportsDeck high-energy club on level 5 with reserved seats, upscale bar, and complimentary appetizers.
+Suites,S506,0.90,Private suite S506 on premium level with excellent elevated view and dedicated catering and service.
+Suites,S649,0.90,Private suite S649 on premium level with excellent elevated view and dedicated catering and service.
+Suites,S650,0.90,Private suite S650 on premium level with excellent elevated view and dedicated catering and service.
+Suites,STE502,0.90,Private suite STE502 on premium level with excellent elevated view and dedicated catering and service.
+Suites,STE512,0.90,Private suite STE512 on premium level with excellent elevated view and dedicated catering and service.
+Suites,STE529,0.90,Private suite STE529 on premium level with excellent elevated view and dedicated catering and service.
+Suites,STE606,0.90,Private suite STE606 on premium level with excellent elevated view and dedicated catering and service.
+Suites,STE621,0.90,Private suite STE621 on premium level with excellent elevated view and dedicated catering and service.
+Suites,STE634,0.90,Private suite STE634 on premium level with excellent elevated view and dedicated catering and service.
+Suites,STE649,0.90,Private suite STE649 on premium level with excellent elevated view and dedicated catering and service.
+Suites,STE650,0.90,Private suite STE650 on premium level with excellent elevated view and dedicated catering and service.
+VIP,11,0.95,VIP floor seating near center in section 11; closest possible view with maximum exclusivity and top-tier service.
+VIP,12,0.95,VIP floor seating near center in section 12; closest possible view with maximum exclusivity and top-tier service.
+VIP,13,0.95,VIP floor seating near center in section 13; closest possible view with maximum exclusivity and top-tier service.
+VIP,17,0.95,VIP floor seating in section 17; ultra-close view along baseline with full VIP services and access.
+VIP,18,0.95,VIP floor seating in section 18; ultra-close view along baseline with full VIP services and access.
+VIP,2,0.95,VIP floor seating in section 2; ultra-close sideline view with full VIP services and access.
+VIP,21,0.95,VIP floor seating in section 21; ultra-close baseline or corner view with full VIP services and access.
+VIP,6,0.95,VIP floor seating in section 6; ultra-close baseline view with full VIP services and access.
+VIP,7,0.95,VIP floor seating in section 7; ultra-close baseline view with full VIP services and access.
