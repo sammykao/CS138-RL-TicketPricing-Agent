@@ -50,8 +50,8 @@ def main():
     parser.add_argument(
         '--target-episodes',
         type=int,
-        default=200_000,
-        help='Target number of episodes to train (default: 200,000)'
+        default=None,
+        help='Target number of episodes to train (None = run indefinitely)'
     )
     
     args = parser.parse_args()
@@ -89,7 +89,10 @@ def main():
         )
         
         print(f"Starting visualization (training mode)...")
-        print(f"Target: {args.target_episodes:,} episodes")
+        if args.target_episodes:
+            print(f"Target: {args.target_episodes:,} episodes")
+        else:
+            print(f"Running indefinitely (no target limit)")
         print(f"Checkpoint interval: Every {args.save_interval:,} episodes")
         print("Controls:")
         print("  R: Reset episode")

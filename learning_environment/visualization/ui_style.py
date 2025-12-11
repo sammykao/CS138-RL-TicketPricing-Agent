@@ -6,7 +6,7 @@ import pygame
 from typing import Tuple
 
 # Window dimensions
-WINDOW_WIDTH = 1280
+WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 720
 FPS = 60
 
@@ -69,7 +69,7 @@ LAYOUT = {
     'price_panel_spacing': 15,
     
     # Right graph area
-    'graph_area_width': 400,
+    'graph_area_width': 600,
     'graph_area_padding': 20,
     'graph_height': 280,
     'graph_spacing': 20,

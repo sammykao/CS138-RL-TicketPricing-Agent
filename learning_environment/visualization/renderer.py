@@ -87,6 +87,25 @@ class Renderer:
         """Clear screen with background color."""
         self.screen.fill(COLORS['bg_dark'])
     
+    def _clip_text(self, text: str, font: pygame.font.Font, max_width: int) -> str:
+        """Clip text to fit within max_width, adding ellipsis if needed."""
+        text_width = font.size(text)[0]
+        if text_width <= max_width:
+            return text
+        
+        # Binary search for the right length
+        ellipsis = "..."
+        ellipsis_width = font.size(ellipsis)[0]
+        max_text_width = max_width - ellipsis_width
+        
+        # Try progressively shorter text
+        for i in range(len(text), 0, -1):
+            clipped = text[:i]
+            if font.size(clipped)[0] <= max_text_width:
+                return clipped + ellipsis
+        
+        return ellipsis
+    
     def draw_time_bar(self, time_remaining: float, time_horizon: float):
         """Draw time remaining bar at top (fills left to right as time passes)."""
         rect = self.layout_rects['time_bar']
@@ -128,6 +147,7 @@ class Renderer:
         self,
         episode: int,
         target_episodes: Optional[int] = None,
+        resume_episode: Optional[int] = None,
         step: int = 0,
         avg_reward_dollar: float = 0.0,
         avg_reward_pct: float = 0.0,
@@ -148,69 +168,71 @@ class Renderer:
         x = rect.x + LAYOUT['price_panel_padding']
         y = rect.y + LAYOUT['price_panel_padding']
         spacing = LAYOUT['price_panel_spacing']
+        max_text_width = rect.width - 2 * LAYOUT['price_panel_padding']  # Available width for text
         
         # Title
-        title = self.fonts['large'].render("Avg Episode Metrics", True, COLORS['text_primary'])
+        title_text = self._clip_text("Avg Episode Metrics", self.fonts['large'], max_text_width)
+        title = self.fonts['large'].render(title_text, True, COLORS['text_primary'])
         self.screen.blit(title, (x, y))
         y += spacing * 2
         
-        # Episode number with progress (bigger)
-        if target_episodes:
-            ep_text = f"Episode: {episode:,} / {target_episodes:,}"
-            progress = min(1.0, episode / target_episodes) if target_episodes > 0 else 0.0
+        # Episode number display
+        if resume_episode is not None and resume_episode > 0:
+            # Show resume information (always show if we resumed)
+            resume_text = f"Resumed from episode {resume_episode:,}"
+            resume_text = self._clip_text(resume_text, self.fonts['small'], max_text_width)
+            resume_label = self.fonts['small'].render(resume_text, True, COLORS['text_secondary'])
+            self.screen.blit(resume_label, (x, y))
+            y += spacing + 5  # Extra spacing after resume info
+            
+            # Current episode
+            ep_text = f"Now on episode {episode:,}"
+            ep_text = self._clip_text(ep_text, self.fonts['large'], max_text_width)
             ep_label = self.fonts['large'].render(ep_text, True, COLORS['text_primary'])
             self.screen.blit(ep_label, (x, y))
-            y += spacing
-            
-            # Draw progress bar
-            progress_rect = pygame.Rect(x, y, rect.width - LAYOUT['price_panel_padding'] * 2, 10)
-            pygame.draw.rect(self.screen, COLORS['time_bar_empty'], progress_rect)
-            fill_width = int(progress_rect.width * progress)
-            if fill_width > 0:
-                fill_rect = pygame.Rect(progress_rect.left, progress_rect.top, fill_width, progress_rect.height)
-                pygame.draw.rect(self.screen, COLORS['success'], fill_rect)
-            
-            # Progress percentage text
-            progress_text = f"{progress * 100:.1f}%"
-            progress_label = self.fonts['small'].render(progress_text, True, COLORS['text_secondary'])
-            progress_label_rect = progress_label.get_rect(center=(progress_rect.centerx, progress_rect.centery))
-            self.screen.blit(progress_label, progress_label_rect)
             y += spacing * 2
         else:
-            ep_label = self.fonts['medium'].render(f"Episode: {episode}", True, COLORS['text_secondary'])
+            # Just show current episode (no resume)
+            ep_text = f"Episode: {episode:,}"
+            ep_text = self._clip_text(ep_text, self.fonts['large'], max_text_width)
+            ep_label = self.fonts['large'].render(ep_text, True, COLORS['text_primary'])
             self.screen.blit(ep_label, (x, y))
-            y += spacing
+            y += spacing * 2
         
-        # Step number (bigger)
-        step_label = self.fonts['medium'].render(f"Step: {step}", True, COLORS['text_secondary'])
+        # Step number
+        step_text = self._clip_text(f"Step: {step}", self.fonts['medium'], max_text_width)
+        step_label = self.fonts['medium'].render(step_text, True, COLORS['text_secondary'])
         self.screen.blit(step_label, (x, y))
         y += spacing * 2
         
-        # Average reward in dollars (bigger)
-        dollar_label = self.fonts['medium'].render("Avg Reward ($)", True, COLORS['text_secondary'])
+        # Average reward in dollars
+        dollar_label_text = self._clip_text("Avg Reward ($)", self.fonts['medium'], max_text_width)
+        dollar_label = self.fonts['medium'].render(dollar_label_text, True, COLORS['text_secondary'])
         self.screen.blit(dollar_label, (x, y))
-        y += spacing
-        dollar_text = f"${avg_reward_dollar:.2f}"
+        y += spacing + 3
+        dollar_text = self._clip_text(f"${avg_reward_dollar:.2f}", self.fonts['huge'], max_text_width)
         dollar_color = COLORS['reward_positive'] if avg_reward_dollar >= 0 else COLORS['reward_negative']
         dollar_surface = self.fonts['huge'].render(dollar_text, True, dollar_color)
         self.screen.blit(dollar_surface, (x, y))
         y += spacing * 2
         
-        # Average reward in percentage (bigger)
-        pct_label = self.fonts['medium'].render("Avg Reward (%)", True, COLORS['text_secondary'])
+        # Average reward in percentage
+        pct_label_text = self._clip_text("Avg Reward (%)", self.fonts['medium'], max_text_width)
+        pct_label = self.fonts['medium'].render(pct_label_text, True, COLORS['text_secondary'])
         self.screen.blit(pct_label, (x, y))
-        y += spacing
-        pct_text = f"{avg_reward_pct:+.2f}%"
+        y += spacing + 3
+        pct_text = self._clip_text(f"{avg_reward_pct:+.2f}%", self.fonts['huge'], max_text_width)
         pct_color = COLORS['reward_positive'] if avg_reward_pct >= 0 else COLORS['reward_negative']
         pct_surface = self.fonts['huge'].render(pct_text, True, pct_color)
         self.screen.blit(pct_surface, (x, y))
         y += spacing * 2
         
-        # Sellout rate (bigger)
-        sellout_label = self.fonts['medium'].render("Tickets Sold", True, COLORS['text_secondary'])
+        # Sellout rate
+        sellout_label_text = self._clip_text("Tickets Sold", self.fonts['medium'], max_text_width)
+        sellout_label = self.fonts['medium'].render(sellout_label_text, True, COLORS['text_secondary'])
         self.screen.blit(sellout_label, (x, y))
-        y += spacing
-        sellout_text = f"{sellout_rate:.1f}%"
+        y += spacing + 3
+        sellout_text = self._clip_text(f"{sellout_rate:.1f}%", self.fonts['huge'], max_text_width)
         sellout_surface = self.fonts['huge'].render(sellout_text, True, COLORS['success'])
         self.screen.blit(sellout_surface, (x, y))
         y += spacing * 2
@@ -220,42 +242,49 @@ class Renderer:
         y += spacing * 2
         
         # Current episode details
-        detail_label = self.fonts['medium'].render("Current Episode", True, COLORS['text_secondary'])
+        detail_label_text = self._clip_text("Current Episode", self.fonts['medium'], max_text_width)
+        detail_label = self.fonts['medium'].render(detail_label_text, True, COLORS['text_secondary'])
         self.screen.blit(detail_label, (x, y))
         y += spacing * 2
         
-        # Current price (bigger)
-        price_label = self.fonts['small'].render(f"Price: ${current_price:.2f}", True, COLORS['text_primary'])
+        # Current price
+        price_text = self._clip_text(f"Price: ${current_price:.2f}", self.fonts['small'], max_text_width)
+        price_label = self.fonts['small'].render(price_text, True, COLORS['text_primary'])
         self.screen.blit(price_label, (x, y))
-        y += spacing
+        y += spacing + 3
         
-        # Initial price (bigger)
-        init_label = self.fonts['small'].render(f"Initial: ${initial_price:.2f}", True, COLORS['text_secondary'])
+        # Initial price
+        init_text = self._clip_text(f"Initial: ${initial_price:.2f}", self.fonts['small'], max_text_width)
+        init_label = self.fonts['small'].render(init_text, True, COLORS['text_secondary'])
         self.screen.blit(init_label, (x, y))
-        y += spacing
+        y += spacing + 3
         
         # Predicted probability of sale (in current episode section)
-        prob_label = self.fonts['small'].render("Predicted Prob of Sale at Step", True, COLORS['text_secondary'])
+        prob_label_text = self._clip_text("Predicted Prob of Sale", self.fonts['small'], max_text_width)
+        prob_label = self.fonts['small'].render(prob_label_text, True, COLORS['text_secondary'])
         self.screen.blit(prob_label, (x, y))
-        y += spacing
-        prob_text = f"{p_sale * 100:.3f}%"
+        y += spacing + 3
+        prob_text = self._clip_text(f"{p_sale * 100:.3f}%", self.fonts['large'], max_text_width)
         prob_surface = self.fonts['large'].render(prob_text, True, COLORS['info'])
         self.screen.blit(prob_surface, (x, y))
-        y += spacing
+        y += spacing * 2
         
-        # Quality (bigger)
-        quality_label = self.fonts['small'].render(f"Quality: {quality_score:.2f}", True, COLORS['text_primary'])
+        # Quality
+        quality_text = self._clip_text(f"Quality: {quality_score:.2f}", self.fonts['small'], max_text_width)
+        quality_label = self.fonts['small'].render(quality_text, True, COLORS['text_primary'])
         self.screen.blit(quality_label, (x, y))
-        y += spacing
+        y += spacing + 3
         
-        # Weekend (bigger)
+        # Weekend
         weekend_text = "Weekend: YES" if is_weekend else "Weekend: NO"
+        weekend_text = self._clip_text(weekend_text, self.fonts['small'], max_text_width)
         weekend_label = self.fonts['small'].render(weekend_text, True, COLORS['text_primary'])
         self.screen.blit(weekend_label, (x, y))
-        y += spacing
+        y += spacing + 3
         
-        # Playoff (bigger)
+        # Playoff
         playoff_text = "Playoff: YES" if is_playoff else "Playoff: NO"
+        playoff_text = self._clip_text(playoff_text, self.fonts['small'], max_text_width)
         playoff_color = COLORS['accent_yellow'] if is_playoff else COLORS['text_primary']
         playoff_label = self.fonts['small'].render(playoff_text, True, playoff_color)
         self.screen.blit(playoff_label, (x, y))
@@ -399,7 +428,8 @@ class Renderer:
         )
         
         # Title
-        title = self.fonts['small'].render("Avg Price Change % by Time Step", True, COLORS['text_primary'])
+        title_text = self._clip_text("Avg Price Change % by Time Step", self.fonts['small'], graph_rect.width)
+        title = self.fonts['small'].render(title_text, True, COLORS['text_primary'])
         self.screen.blit(title, (graph_rect.x, graph_rect.y - 20))
         
         if len(steps) == 0 or len(avg_price_changes) == 0:
@@ -462,15 +492,41 @@ class Renderer:
             tick_value = change_min + (change_max - change_min) * i / 4
             pygame.draw.line(self.screen, COLORS['graph_axis'], (graph_rect.left, tick_y), (graph_rect.left - 5, tick_y), 2)
             tick_label = self.fonts['tiny'].render(f"{tick_value:.1f}%", True, COLORS['text_secondary'])
-            self.screen.blit(tick_label, (graph_rect.left - 45, tick_y - 7))
+            tick_label_x = graph_rect.left - 45
+            # Ensure tick labels don't go beyond the parent rect left edge
+            if tick_label_x < rect.x:
+                tick_label_x = rect.x + 5
+            self.screen.blit(tick_label, (tick_label_x, tick_y - 7))
         
         # Axis labels
-        step_label = self.fonts['small'].render("Time Step", True, COLORS['text_primary'])
-        self.screen.blit(step_label, (graph_rect.centerx - 40, graph_rect.bottom + 25))
+        # X-axis label (Time Step) - ensure it fits within the parent rect
+        step_label_text = "Time Step"
+        step_label = self.fonts['small'].render(step_label_text, True, COLORS['text_primary'])
+        step_label_width = step_label.get_width()
+        step_label_x = graph_rect.centerx - step_label_width // 2
+        # Ensure it doesn't go beyond the parent rect
+        step_label_x = max(rect.x + LAYOUT['graph_area_padding'], min(step_label_x, rect.right - step_label_width - LAYOUT['graph_area_padding']))
+        step_label_y = graph_rect.bottom + 20
+        # Ensure it doesn't go beyond the parent rect bottom
+        if step_label_y + step_label.get_height() > rect.bottom:
+            step_label_y = rect.bottom - step_label.get_height() - 5
+        self.screen.blit(step_label, (step_label_x, step_label_y))
         
-        change_label = self.fonts['small'].render("Price Change %", True, COLORS['text_primary'])
+        # Y-axis label (Price Change %) - ensure it fits within the parent rect
+        change_label_text = "Price Change %"
+        change_label = self.fonts['small'].render(change_label_text, True, COLORS['text_primary'])
         change_surface = pygame.transform.rotate(change_label, 90)
-        self.screen.blit(change_surface, (graph_rect.left - 70, graph_rect.centery - 40))
+        change_label_x = graph_rect.left - 70
+        # Ensure it doesn't go beyond the parent rect left edge
+        if change_label_x < rect.x:
+            change_label_x = rect.x + 5
+        change_label_y = graph_rect.centery - change_surface.get_height() // 2
+        # Ensure it fits vertically
+        if change_label_y < rect.y:
+            change_label_y = rect.y + 5
+        if change_label_y + change_surface.get_height() > rect.bottom:
+            change_label_y = rect.bottom - change_surface.get_height() - 5
+        self.screen.blit(change_surface, (change_label_x, change_label_y))
     
     def draw_static_demand_curve(self, prices: np.ndarray, probabilities: np.ndarray):
         """Draw static demand curve (no current price marker)."""
@@ -655,13 +711,16 @@ class Renderer:
         overlay.fill((*COLORS['error'], int(50 * intensity)))
         self.screen.blit(overlay, (0, 0))
         
-        # Draw failure message
+        # Draw failure message with fading
         rect = self.layout_rects['action_area']
         center = rect.center
         
-        text = self.fonts['large'].render("TIME EXPIRED", True, COLORS['error'])
-        text_rect = text.get_rect(center=center)
-        self.screen.blit(text, text_rect)
+        # Create text surface and apply alpha for fading
+        text_surface = self.fonts['large'].render("TIME EXPIRED", True, COLORS['error'])
+        # Set alpha based on intensity (fades from 255 to 0 over 40 frames)
+        text_surface.set_alpha(int(255 * intensity))
+        text_rect = text_surface.get_rect(center=center)
+        self.screen.blit(text_surface, text_rect)
     
     def update_animations(self):
         """Update all animation states."""

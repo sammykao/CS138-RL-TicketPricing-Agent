@@ -40,7 +40,7 @@ class VisualizationApp:
         step_delay_ms: int = 100,
         checkpoint_path: Optional[Path] = None,
         save_interval_episodes: int = 5,
-        target_episodes: int = 200_000,
+        target_episodes: Optional[int] = None,
         episode_metadata_path: Optional[Path] = None
     ):
         """
@@ -52,7 +52,7 @@ class VisualizationApp:
             step_delay_ms: Delay between steps (milliseconds) - lower = faster training
             checkpoint_path: Path to save checkpoints (optional, saves automatically if provided)
             save_interval_episodes: Save checkpoint every N episodes (default: 5)
-            target_episodes: Target number of episodes to train (default: 200,000)
+            target_episodes: Target number of episodes to train (None = run indefinitely)
             episode_metadata_path: Path to save episode metadata (auto-generated if None)
         """
         self.env = env
@@ -72,7 +72,9 @@ class VisualizationApp:
             self.episode_metadata_path = Path(episode_metadata_path)
         
         # Load episode count from metadata if exists
-        self.current_episode = self._load_episode_count()
+        loaded_episode = self._load_episode_count()
+        self.current_episode = loaded_episode
+        self.resume_episode = loaded_episode if loaded_episode > 0 else 0  # Track where we resumed from
         self.last_saved_episode = self.current_episode
         
         # Initialize pygame
@@ -87,8 +89,7 @@ class VisualizationApp:
         # Initialize behavior tracker
         self.behavior_tracker = BehaviorTracker(max_time_steps=200)
         
-        # Episode state
-        self.current_episode = 0
+        # Episode state (current_episode already set from metadata above)
         self.current_step = 0
         self.obs: Optional[np.ndarray] = None
         self.info: Dict[str, Any] = {}
@@ -274,7 +275,10 @@ class VisualizationApp:
                 with open(self.episode_metadata_path, 'r') as f:
                     metadata = json.load(f)
                     episode_count = metadata.get('episode_count', 0)
-                    print(f"Resuming from episode {episode_count:,} / {self.target_episodes:,}")
+                    if self.target_episodes:
+                        print(f"Resuming from episode {episode_count:,} / {self.target_episodes:,}")
+                    else:
+                        print(f"Resuming from episode {episode_count:,}")
                     return episode_count
             except Exception as e:
                 print(f"Warning: Could not load episode metadata: {e}")
@@ -286,7 +290,6 @@ class VisualizationApp:
             self.episode_metadata_path.parent.mkdir(parents=True, exist_ok=True)
             metadata = {
                 'episode_count': self.current_episode,
-                'target_episodes': self.target_episodes,
                 'last_saved': str(self.checkpoint_path) if self.checkpoint_path else None
             }
             with open(self.episode_metadata_path, 'w') as f:
@@ -296,22 +299,6 @@ class VisualizationApp:
     
     def run_training_step(self):
         """Run one training step."""
-        # Check if target reached
-        if self.current_episode >= self.target_episodes:
-            print(f"\n{'='*60}")
-            print(f"TARGET REACHED: {self.target_episodes:,} episodes completed!")
-            print(f"{'='*60}")
-            # Save final checkpoint
-            if self.checkpoint_path and hasattr(self.agent, 'save'):
-                try:
-                    self.agent.save(self.checkpoint_path)
-                    self._save_episode_metadata()
-                    print(f"Final checkpoint saved at episode {self.current_episode:,}")
-                except Exception as e:
-                    print(f"Warning: Failed to save final checkpoint: {e}")
-            self.running = False
-            return
-        
         if self.episode_done:
             # Episode finished - record metrics
             # Calculate reward in both % and dollars
@@ -348,8 +335,7 @@ class VisualizationApp:
                         self.agent.save(self.checkpoint_path)
                         self._save_episode_metadata()
                         self.last_saved_episode = self.current_episode
-                        progress_pct = (self.current_episode / self.target_episodes) * 100.0
-                        print(f"Checkpoint saved at episode {self.current_episode:,} / {self.target_episodes:,} ({progress_pct:.1f}%)")
+                        print(f"Checkpoint saved at episode {self.current_episode:,}")
                     except Exception as e:
                         print(f"Warning: Failed to save checkpoint: {e}")
             
@@ -371,9 +357,18 @@ class VisualizationApp:
         )
         
         # Draw left sidebar with metrics
+        # Debug: Ensure episode is correct
+        if self.current_episode == 0 and self.resume_episode > 0:
+            # This shouldn't happen, but if it does, use resume_episode
+            print(f"Warning: current_episode is 0 but resume_episode is {self.resume_episode}, using resume_episode")
+            display_episode = self.resume_episode
+        else:
+            display_episode = self.current_episode
+        
         self.renderer.draw_metrics_sidebar(
-            episode=self.current_episode,
+            episode=display_episode,
             target_episodes=self.target_episodes,
+            resume_episode=self.resume_episode if self.resume_episode > 0 else None,
             step=self.current_step,
             avg_reward_dollar=self.avg_reward_dollar,
             avg_reward_pct=self.avg_reward_pct,
@@ -447,7 +442,7 @@ def create_app_from_checkpoint(
     agent_config: Optional[Dict] = None,
     step_delay_ms: int = 100,
     save_interval_episodes: int = 5,
-    target_episodes: int = 200_000
+    target_episodes: Optional[int] = None
 ) -> VisualizationApp:
     """
     Convenience function to create app from checkpoint.
@@ -459,7 +454,7 @@ def create_app_from_checkpoint(
         agent_config: Agent configuration dict
         step_delay_ms: Delay between steps (milliseconds) - lower = faster training
         save_interval_episodes: Save checkpoint every N episodes (default: 10)
-        target_episodes: Target number of episodes to train (default: 200,000)
+        target_episodes: Target number of episodes to train (None = run indefinitely)
     
     Returns:
         Initialized VisualizationApp instance
