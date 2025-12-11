@@ -220,14 +220,29 @@ class TicketPricingEnv(gym.Env):
             p_sale_before_event = 1.0 / (1.0 + np.exp(-sharpened_logit))
         
         # FIX: Reduce probability near event to prevent unrealistic high probabilities
-        # Apply STRONG time-based penalty: reduce probability in last 48 hours
+        # Apply time-based penalty in last 48 hours, but make it price-dependent
+        # Cheap tickets (fire sales) should still have reasonable probability
+        price_rel = self.current_price / self.initial_price
+        
         if self.time_remaining < 48.0:
-            # Stronger penalty: reduce by up to 85% at 0h
-            time_penalty_factor = 1.0 - (48.0 - self.time_remaining) / 48.0 * 0.85
+            # Base penalty: reduce by up to 85% at 0h for normal/expensive prices
+            base_penalty = (48.0 - self.time_remaining) / 48.0 * 0.85
+            
+            # Reduce penalty for heavily discounted tickets (fire sales should still work!)
+            # If price is 50% off or more, reduce penalty by 80% (minimal penalty)
+            # If price is 30% off or more, reduce penalty by 50% (moderate penalty)
+            # Normal/expensive prices get full penalty
+            if price_rel < 0.5:  # 50%+ discount (fire sale)
+                penalty_reduction = 0.8  # Reduce penalty by 80%
+            elif price_rel < 0.7:  # 30%+ discount (good deal)
+                penalty_reduction = 0.5  # Reduce penalty by 50%
+            else:  # Normal or expensive prices
+                penalty_reduction = 0.0  # Full penalty
+            
+            time_penalty_factor = 1.0 - base_penalty * (1.0 - penalty_reduction)
             p_sale_before_event = p_sale_before_event * time_penalty_factor
         
         # FIX: STRONG penalty for high prices near event (prevent price gouging)
-        price_rel = self.current_price / self.initial_price
         if self.time_remaining < 72.0:  # Last 3 days
             if price_rel > 1.1:  # Price > 10% premium
                 # Very strong penalty: up to 95% reduction for gouging
